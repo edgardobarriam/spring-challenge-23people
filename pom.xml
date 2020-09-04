@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>io.github.edgardobarriam</groupId>
 	<artifactId>spring-gcp-challenge</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.1</version>
 	<name>spring-gcp-challenge</name>
 	<description>Spring Boot + GCP challenge for 23People</description>
 

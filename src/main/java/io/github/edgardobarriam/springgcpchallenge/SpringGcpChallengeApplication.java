@@ -2,7 +2,9 @@ package io.github.edgardobarriam.springgcpchallenge;
 
 import io.github.edgardobarriam.springgcpchallenge.security.JWTAuthorizationFilter;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -19,7 +21,7 @@ public class SpringGcpChallengeApplication {
 	
 	@EnableWebSecurity
   @Configuration
-  class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+  static class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     
     @Override
     protected void configure(HttpSecurity http) throws Exception {

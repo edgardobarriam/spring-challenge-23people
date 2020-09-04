@@ -1,12 +1,11 @@
 package io.github.edgardobarriam.springgcpchallenge.security;
 
-import com.google.api.Http;
 import io.jsonwebtoken.*;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
+import util.JWTUtils;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -18,16 +17,13 @@ import java.util.stream.Collectors;
 
 public class JWTAuthorizationFilter extends OncePerRequestFilter {
   
-  private final String HEADER = "Authorization";
-  private final String PREFIX = "Bearer ";
-  private String jwtSecret = "mySuperSecureSecret";
-  
   @Override
   protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
     throws ServletException, IOException {
     try {
-      if (existsJWTToken(request, response)) {
-        Claims claims = validateToken(request);
+      if (existsJWTToken(request)) {
+        String tokenFromHeader = request.getHeader(JWTUtils.AUTHENTICATION_HEADER).replace(JWTUtils.AUTHENTICATION_PREFIX, "");
+        Claims claims = JWTUtils.validateToken(tokenFromHeader);
         if (claims.get("authorities") != null) {
           setUpSpringAuthentication(claims);
         } else {
@@ -40,14 +36,11 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
     } catch (ExpiredJwtException | UnsupportedJwtException | MalformedJwtException exception) {
       response.setStatus(HttpServletResponse.SC_FORBIDDEN);
       response.sendError(HttpServletResponse.SC_FORBIDDEN, exception.getMessage());
+    } catch (SignatureException exception) {
+      response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+      response.sendError(HttpServletResponse.SC_UNAUTHORIZED, exception.getMessage());
     }
   }
-  
-  private Claims validateToken(HttpServletRequest request) {
-    String jwtToken = request.getHeader(HEADER).replace(PREFIX, "");
-    return Jwts.parser().setSigningKey(jwtSecret.getBytes()).parseClaimsJws(jwtToken).getBody();
-  }
-  
   
   private void setUpSpringAuthentication(Claims claims) {
     @SuppressWarnings("unchecked")
@@ -56,11 +49,10 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
     UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(claims.getSubject(), null,
       authorities.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList()));
     SecurityContextHolder.getContext().setAuthentication(auth);
-    
   }
   
-  private boolean existsJWTToken(HttpServletRequest request, HttpServletResponse res) {
-    String authenticationHeader = request.getHeader(HEADER);
-    return authenticationHeader != null && authenticationHeader.startsWith(PREFIX);
+  private boolean existsJWTToken(HttpServletRequest request) {
+    String authenticationHeader = request.getHeader(JWTUtils.AUTHENTICATION_HEADER);
+    return authenticationHeader != null && authenticationHeader.startsWith(JWTUtils.AUTHENTICATION_PREFIX);
   }
 }

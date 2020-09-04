@@ -24,21 +24,22 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
       if (existsJWTToken(request)) {
         String tokenFromHeader = request.getHeader(JWTUtils.AUTHENTICATION_HEADER).replace(JWTUtils.AUTHENTICATION_PREFIX, "");
         Claims claims = JWTUtils.validateToken(tokenFromHeader);
+        
         if (claims.get("authorities") != null) {
           setUpSpringAuthentication(claims);
         } else {
           SecurityContextHolder.clearContext();
         }
+        
       } else {
         SecurityContextHolder.clearContext();
       }
+      
       filterChain.doFilter(request, response);
-    } catch (ExpiredJwtException | UnsupportedJwtException | MalformedJwtException exception) {
+      
+    } catch (JwtException exception) {
       response.setStatus(HttpServletResponse.SC_FORBIDDEN);
       response.sendError(HttpServletResponse.SC_FORBIDDEN, exception.getMessage());
-    } catch (SignatureException exception) {
-      response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-      response.sendError(HttpServletResponse.SC_UNAUTHORIZED, exception.getMessage());
     }
   }
   

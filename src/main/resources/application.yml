@@ -1,0 +1,9 @@
+spring:
+  cloud.gcp.sql:
+    database-name: spring_challenge_schema
+    instance-connection-name: spring-gcp-challenge:us-east1:spring-gcp-challenge-db
+  datasource:
+    # credentials should be provided as env variables, probably using Jenkins. As this is just a test, they are hardcoded.
+    username: root
+    password: 5yjEqM3mEg8Mqp2n
+  jpa.hibernate.ddl-auto: update

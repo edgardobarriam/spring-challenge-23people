@@ -29,6 +29,7 @@
   <properties>
     <java.version>11</java.version>
     <spring-cloud.version>Hoxton.SR8</spring-cloud.version>
+    <appengine-maven-plugin.version>2.2.0</appengine-maven-plugin.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
   </properties>
@@ -46,14 +47,13 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>
     </dependency>
+  
     <dependency>
-      <groupId>org.springframework.cloud</groupId>
-      <artifactId>spring-cloud-gcp-starter</artifactId>
+      <groupId>mysql</groupId>
+      <artifactId>mysql-connector-java</artifactId>
+      <scope>runtime</scope>
     </dependency>
-    <dependency>
-      <groupId>org.springframework.cloud</groupId>
-      <artifactId>spring-cloud-gcp-starter-storage</artifactId>
-    </dependency>
+    
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-devtools</artifactId>
@@ -76,6 +76,14 @@
       <artifactId>spring-security-test</artifactId>
       <scope>test</scope>
     </dependency>
+      <dependency>
+        <groupId>org.springframework.cloud</groupId>
+        <artifactId>spring-cloud-gcp-starter</artifactId>
+      </dependency>
+    <dependency>
+      <groupId>org.springframework.cloud</groupId>
+      <artifactId>spring-cloud-gcp-starter-sql-mysql</artifactId>
+    </dependency>
   </dependencies>
   
   <dependencyManagement>
@@ -96,7 +104,17 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
       </plugin>
+      <plugin>
+        <groupId>com.google.cloud.tools</groupId>
+        <artifactId>appengine-maven-plugin</artifactId>
+        <version>${appengine-maven-plugin.version}</version>
+        <configuration>
+          <deploy.projectId>spring-gcp-challenge</deploy.projectId>
+          <deploy.version>1</deploy.version>
+        </configuration>
+      </plugin>
     </plugins>
+    
   </build>
 
 </project>

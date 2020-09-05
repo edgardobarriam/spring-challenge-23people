@@ -8,4 +8,5 @@ public interface CourseService {
   
   boolean saveNewCourse(CourseDTO courseDTO);
   List<CourseDTO> getAllCourses();
+  CourseDTO getCourse(int id);
 }

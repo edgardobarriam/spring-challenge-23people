@@ -7,6 +7,7 @@ import io.github.edgardobarriam.springgcpchallenge.model.Course;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @Service
@@ -41,5 +42,11 @@ public class CourseServiceImpl implements CourseService {
       modelCourse.getName(),
       modelCourse.getCode()
     )).collect(Collectors.toList());
+  }
+  
+  @Override
+  public CourseDTO getCourse(int id) throws NoSuchElementException {
+    Course course = courseDAO.findById(id).orElseThrow();
+    return courseDTOMapper.toDTO(course);
   }
 }

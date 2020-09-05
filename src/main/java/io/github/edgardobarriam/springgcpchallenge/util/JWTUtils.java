@@ -1,4 +1,4 @@
-package util;
+package io.github.edgardobarriam.springgcpchallenge.util;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

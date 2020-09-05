@@ -5,6 +5,7 @@ import io.github.edgardobarriam.springgcpchallenge.dto.CourseDTO;
 import io.github.edgardobarriam.springgcpchallenge.dto.mapper.CourseDTOMapper;
 import io.github.edgardobarriam.springgcpchallenge.exception.BodyNotValidException;
 import io.github.edgardobarriam.springgcpchallenge.model.Course;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -35,10 +36,10 @@ public class CourseServiceImpl implements CourseService {
   }
   
   @Override
-  public List<CourseDTO> getAllCourses() {
-    List<Course> allCourses = courseDAO.findAll();
+  public List<CourseDTO> getAllCourses(int pageNumber) {
+    List<Course> coursesOnPage = courseDAO.findAll(PageRequest.of(pageNumber,10)).getContent();
     
-    return allCourses.stream().map(modelCourse -> new CourseDTO(
+    return coursesOnPage.stream().map(modelCourse -> new CourseDTO(
       modelCourse.getId(),
       modelCourse.getName(),
       modelCourse.getCode()

@@ -6,7 +6,6 @@ import io.github.edgardobarriam.springgcpchallenge.service.CourseService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import java.util.List;
 import java.util.NoSuchElementException;
 
 
@@ -33,8 +32,13 @@ public class CourseController {
   
   @GetMapping
   @ResponseBody
-  public List<CourseDTO> getCourses() {
-    return courseService.getAllCourses();
+  public ResponseEntity<?> getCourses(@RequestBody(required = false) String pageNumber) {
+    try {
+      int pageNbr = pageNumber != null ? Integer.parseInt(pageNumber) : 0; // 0 = First Page
+      return new ResponseEntity<>(courseService.getAllCourses(pageNbr), HttpStatus.OK);
+    } catch (NumberFormatException e) {
+      return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
   }
   
   @GetMapping("{id}")

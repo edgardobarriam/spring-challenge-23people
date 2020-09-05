@@ -18,7 +18,7 @@ public class Student {
   private String lastName;
   @Column(name = "age")
   private int age;
-  @ManyToOne
+  @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
   @JoinColumn(name = "course_id")
   private Course course;
   
@@ -84,6 +84,7 @@ public class Student {
       ", name='" + name + '\'' +
       ", lastName='" + lastName + '\'' +
       ", age=" + age +
+      ", course=" + course +
       '}';
   }
 }

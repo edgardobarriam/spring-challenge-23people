@@ -20,7 +20,7 @@ public class CourseController {
   }
   
   @PostMapping
-  public ResponseEntity saveNewCourse(@RequestBody CourseDTO inputCourseDTO) {
+  public ResponseEntity<?> saveNewCourse(@RequestBody CourseDTO inputCourseDTO) {
     boolean saveOk = courseService.saveNewCourse(inputCourseDTO);
     
     if (saveOk) {
@@ -38,7 +38,7 @@ public class CourseController {
   
   @GetMapping("{id}")
   @ResponseBody
-  public ResponseEntity getCourse(@PathVariable int id) {
+  public ResponseEntity<?> getCourse(@PathVariable int id) {
     try {
       return new ResponseEntity<>(courseService.getCourse(id), HttpStatus.OK);
     } catch (NoSuchElementException e) {

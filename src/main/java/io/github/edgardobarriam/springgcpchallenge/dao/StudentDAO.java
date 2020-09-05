@@ -1,7 +1,7 @@
 package io.github.edgardobarriam.springgcpchallenge.dao;
 
 import io.github.edgardobarriam.springgcpchallenge.model.Student;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.PagingAndSortingRepository;
 
-public interface StudentDAO extends JpaRepository<Student, Integer> {
+public interface StudentDAO extends PagingAndSortingRepository<Student, Integer> {
 }

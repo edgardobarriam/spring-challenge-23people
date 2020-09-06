@@ -17,7 +17,7 @@ public interface RUTUtils {
     return rut.replaceAll("[ .-]+",""); // Removes spaces, dots and dashes
   }
   
-  private static String calcDV(String rut) {
+  static String calcDV(String rut) {
     String rutWithoutDV = rut.substring(0,rut.length()-1);
     
     int[] validationSequence = {2,3,4,5,6,7,2,3};

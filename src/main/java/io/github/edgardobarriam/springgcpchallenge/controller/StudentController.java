@@ -22,9 +22,9 @@ public class StudentController {
   
   @GetMapping
   @ResponseBody
-  public ResponseEntity<?> getStudentsPaginated(@RequestBody(required = false) String pageNumber) {
+  public ResponseEntity<?> getStudentsPaginated(@RequestHeader(required = false, name = "PageNumber") Integer pageNumber ) {
     try {
-      int pageNbr = pageNumber != null ? Integer.parseInt(pageNumber) : 0; // 0 = First Page
+      int pageNbr = pageNumber != null ? pageNumber : 0; // 0 = First Page
       return new ResponseEntity<>(studentService.getStudentsPaginated(pageNbr), HttpStatus.OK);
     } catch (NumberFormatException e) {
       return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

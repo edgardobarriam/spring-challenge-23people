@@ -2,7 +2,7 @@ package io.github.edgardobarriam.springgcpchallenge.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-import util.JWTUtils;
+import io.github.edgardobarriam.springgcpchallenge.util.JWTUtils;
 
 
 @RestController

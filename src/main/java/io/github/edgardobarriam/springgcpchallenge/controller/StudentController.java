@@ -51,6 +51,18 @@ public class StudentController {
     }
   }
   
+  @PutMapping("{id}")
+  public ResponseEntity<?> editStudent(@RequestBody StudentDTO studentDTO, @PathVariable int id) {
+    try {
+      studentService.editStudent(studentDTO, id);
+      return new ResponseEntity<>(HttpStatus.OK);
+    } catch (NoSuchElementException e) {
+      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    } catch (BodyNotValidException e) {
+      return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+  }
+  
   @DeleteMapping("{id}")
   public ResponseEntity<?> deleteStudent(@PathVariable int id) {
     try {

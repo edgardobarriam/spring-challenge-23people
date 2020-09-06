@@ -10,6 +10,6 @@ public interface StudentService {
   List<StudentDTO> getStudentsPaginated(int pageNumber);
   void saveNewStudent(StudentDTO studentDTO) throws BodyNotValidException;
   StudentDTO getStudent(int id);
-  void editStudent(StudentDTO studentDTO);
+  void editStudent(StudentDTO studentDTO, int id) throws BodyNotValidException;
   void deleteStudent(int id);
 }

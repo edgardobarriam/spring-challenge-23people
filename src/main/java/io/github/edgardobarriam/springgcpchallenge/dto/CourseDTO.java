@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class CourseDTO implements Serializable {
   
-  private int id;
+  private Integer id;
   private String name;
   private String code;
   
@@ -17,7 +17,7 @@ public class CourseDTO implements Serializable {
     this.code = code;
   }
   
-  public int getId() {
+  public Integer getId() {
     return id;
   }
   

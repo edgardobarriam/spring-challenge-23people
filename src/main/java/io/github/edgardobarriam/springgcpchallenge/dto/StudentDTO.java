@@ -8,7 +8,7 @@ public class StudentDTO implements Serializable {
   private String rut;
   private String name;
   private String lastName;
-  private int age;
+  private Integer age;
   private CourseDTO course;
   
   public StudentDTO() {
@@ -55,7 +55,7 @@ public class StudentDTO implements Serializable {
     this.lastName = lastName;
   }
   
-  public int getAge() {
+  public Integer getAge() {
     return age;
   }
   

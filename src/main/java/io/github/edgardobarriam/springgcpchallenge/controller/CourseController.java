@@ -21,13 +21,14 @@ public class CourseController {
   
   @PostMapping
   public ResponseEntity<?> saveNewCourse(@RequestBody CourseDTO inputCourseDTO) {
-    boolean saveOk = courseService.saveNewCourse(inputCourseDTO);
     
-    if (saveOk) {
+    try {
+      courseService.saveNewCourse(inputCourseDTO);
       return new ResponseEntity<>(HttpStatus.CREATED);
-    } else {
+    } catch (BodyNotValidException e) {
       return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
+    
   }
   
   @GetMapping
@@ -35,7 +36,7 @@ public class CourseController {
   public ResponseEntity<?> getCourses(@RequestBody(required = false) String pageNumber) {
     try {
       int pageNbr = pageNumber != null ? Integer.parseInt(pageNumber) : 0; // 0 = First Page
-      return new ResponseEntity<>(courseService.getAllCourses(pageNbr), HttpStatus.OK);
+      return new ResponseEntity<>(courseService.getCoursesPaginated(pageNbr), HttpStatus.OK);
     } catch (NumberFormatException e) {
       return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }

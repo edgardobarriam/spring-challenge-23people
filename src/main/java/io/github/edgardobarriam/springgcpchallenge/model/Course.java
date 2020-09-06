@@ -18,7 +18,8 @@ public class Course {
   public Course() {
   }
   
-  public Course(String name, String code) {
+  public Course(int id, String name, String code) {
+    this.id = id;
     this.name = name;
     this.code = code;
   }

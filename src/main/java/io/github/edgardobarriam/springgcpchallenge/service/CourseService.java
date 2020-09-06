@@ -7,8 +7,8 @@ import java.util.List;
 
 public interface CourseService {
   
-  boolean saveNewCourse(CourseDTO courseDTO);
-  List<CourseDTO> getAllCourses(int pageNumber);
+  void saveNewCourse(CourseDTO courseDTO) throws BodyNotValidException;
+  List<CourseDTO> getCoursesPaginated(int pageNumber);
   CourseDTO getCourse(int id);
   void editCourse(CourseDTO courseDTO, int id) throws BodyNotValidException;
   void deleteCourse(int id);

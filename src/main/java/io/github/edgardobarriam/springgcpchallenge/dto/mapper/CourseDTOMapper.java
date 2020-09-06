@@ -9,16 +9,21 @@ public class CourseDTOMapper implements DTOMapper<Course, CourseDTO> {
   
   @Override
   public CourseDTO toDTO(Course model) {
-    return new CourseDTO(
-      model.getId(),
-      model.getName(),
-      model.getCode()
-    );
+    if (model == null) {
+      return null;
+    } else {
+      return new CourseDTO(
+        model.getId(),
+        model.getName(),
+        model.getCode()
+      );
+    }
   }
   
   @Override
   public Course toModel(CourseDTO dto) {
     return new Course(
+      dto.getId(),
       dto.getName(),
       dto.getCode()
     );

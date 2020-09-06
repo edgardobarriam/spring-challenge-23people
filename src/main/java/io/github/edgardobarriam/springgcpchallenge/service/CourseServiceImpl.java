@@ -5,6 +5,7 @@ import io.github.edgardobarriam.springgcpchallenge.dto.CourseDTO;
 import io.github.edgardobarriam.springgcpchallenge.dto.mapper.CourseDTOMapper;
 import io.github.edgardobarriam.springgcpchallenge.exception.BodyNotValidException;
 import io.github.edgardobarriam.springgcpchallenge.model.Course;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
@@ -18,32 +19,30 @@ public class CourseServiceImpl implements CourseService {
   final CourseDTOMapper courseDTOMapper;
   final CourseDAO courseDAO;
   
+  @Value("${pagination-size:10}")
+  private int paginationSize;
+  
   public CourseServiceImpl(CourseDTOMapper courseDTOMapper, CourseDAO courseDAO) {
     this.courseDTOMapper = courseDTOMapper;
     this.courseDAO = courseDAO;
   }
   
   @Override
-  public boolean saveNewCourse(CourseDTO courseDTO) {
+  public void saveNewCourse(CourseDTO courseDTO) throws BodyNotValidException {
     Course course = courseDTOMapper.toModel(courseDTO);
   
     if (courseCodeIsNotValid(course.getCode())) {
-      return false;
+      throw new BodyNotValidException("Course code length cannot be greater than 4");
     }
   
     courseDAO.save(course);
-    return true;
   }
   
   @Override
-  public List<CourseDTO> getAllCourses(int pageNumber) {
-    List<Course> coursesOnPage = courseDAO.findAll(PageRequest.of(pageNumber,10)).getContent();
+  public List<CourseDTO> getCoursesPaginated(int pageNumber) {
+    List<Course> coursesOnPage = courseDAO.findAll(PageRequest.of(pageNumber, paginationSize)).getContent();
     
-    return coursesOnPage.stream().map(modelCourse -> new CourseDTO(
-      modelCourse.getId(),
-      modelCourse.getName(),
-      modelCourse.getCode()
-    )).collect(Collectors.toList());
+    return coursesOnPage.stream().map(courseDTOMapper::toDTO).collect(Collectors.toList());
   }
   
   @Override

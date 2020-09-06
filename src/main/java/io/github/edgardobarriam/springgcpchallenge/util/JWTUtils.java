@@ -5,12 +5,10 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
-import org.springframework.stereotype.Component;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Component
 public interface JWTUtils {
   
   String jwtSecret = "mySuperSecureSecret";

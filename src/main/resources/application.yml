@@ -8,3 +8,4 @@ spring:
     username: root
     password: 5yjEqM3mEg8Mqp2n
   jpa.hibernate.ddl-auto: update
+pagination-size: 10

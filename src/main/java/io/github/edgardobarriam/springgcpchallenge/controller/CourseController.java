@@ -33,9 +33,9 @@ public class CourseController {
   
   @GetMapping
   @ResponseBody
-  public ResponseEntity<?> getCourses(@RequestBody(required = false) String pageNumber) {
+  public ResponseEntity<?> getCourses(@RequestHeader(required = false, name = "PageNumber") Integer pageNumber ) {
     try {
-      int pageNbr = pageNumber != null ? Integer.parseInt(pageNumber) : 0; // 0 = First Page
+      int pageNbr = pageNumber != null ? pageNumber : 0; // 0 = First Page
       return new ResponseEntity<>(courseService.getCoursesPaginated(pageNbr), HttpStatus.OK);
     } catch (NumberFormatException e) {
       return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

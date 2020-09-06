@@ -1,6 +1,8 @@
 package io.github.edgardobarriam.springgcpchallenge.dto;
 
-public class StudentDTO {
+import java.io.Serializable;
+
+public class StudentDTO implements Serializable {
   
   private int id;
   private String rut;

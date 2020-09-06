@@ -50,4 +50,14 @@ public class StudentController {
       return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
   }
+  
+  @DeleteMapping("{id}")
+  public ResponseEntity<?> deleteStudent(@PathVariable int id) {
+    try {
+      studentService.deleteStudent(id);
+      return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    } catch (NoSuchElementException e) {
+      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+  }
 }

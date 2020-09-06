@@ -65,7 +65,8 @@ public class StudentServiceImpl implements StudentService {
   }
   
   @Override
-  public void deleteStudent(int id) {
-  
+  public void deleteStudent(int id) throws NoSuchElementException {
+    Student studentToBeDeleted = studentDAO.findById(id).orElseThrow();
+    studentDAO.delete(studentToBeDeleted);
   }
 }

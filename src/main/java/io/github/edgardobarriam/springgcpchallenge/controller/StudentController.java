@@ -6,10 +6,9 @@ import io.github.edgardobarriam.springgcpchallenge.service.StudentService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.NoSuchElementException;
 
 @Controller
 @RequestMapping("students")
@@ -22,12 +21,23 @@ public class StudentController {
   }
   
   @GetMapping
+  @ResponseBody
   public ResponseEntity<?> getStudentsPaginated(@RequestBody(required = false) String pageNumber) {
     try {
       int pageNbr = pageNumber != null ? Integer.parseInt(pageNumber) : 0; // 0 = First Page
       return new ResponseEntity<>(studentService.getStudentsPaginated(pageNbr), HttpStatus.OK);
     } catch (NumberFormatException e) {
       return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+  }
+  
+  @GetMapping("{id}")
+  @ResponseBody
+  public ResponseEntity<?> getStudent(@PathVariable int id) {
+    try {
+      return new ResponseEntity<>(studentService.getStudent(id), HttpStatus.OK);
+    } catch (NoSuchElementException e) {
+      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
   }
   

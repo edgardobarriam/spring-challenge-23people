@@ -11,6 +11,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @Service
@@ -53,8 +54,9 @@ public class StudentServiceImpl implements StudentService {
   }
   
   @Override
-  public StudentDTO getStudent(int id) {
-    return null;
+  public StudentDTO getStudent(int id) throws NoSuchElementException {
+    Student student = studentDAO.findById(id).orElseThrow();
+    return studentDTOMapper.toDTO(student);
   }
   
   @Override

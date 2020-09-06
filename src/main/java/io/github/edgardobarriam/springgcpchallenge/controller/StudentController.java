@@ -37,7 +37,7 @@ public class StudentController {
       studentService.saveNewStudent(studentDTO);
       return new ResponseEntity<>(HttpStatus.CREATED);
     } catch (BodyNotValidException e) {
-      return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+      return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
   }
 }

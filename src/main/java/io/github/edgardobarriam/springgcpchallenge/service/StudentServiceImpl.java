@@ -5,6 +5,7 @@ import io.github.edgardobarriam.springgcpchallenge.dto.StudentDTO;
 import io.github.edgardobarriam.springgcpchallenge.dto.mapper.StudentDTOMapper;
 import io.github.edgardobarriam.springgcpchallenge.exception.BodyNotValidException;
 import io.github.edgardobarriam.springgcpchallenge.model.Student;
+import io.github.edgardobarriam.springgcpchallenge.util.RUTUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -37,12 +38,12 @@ public class StudentServiceImpl implements StudentService {
     
     if (studentDTO.getAge() < 18) {
       throw new BodyNotValidException("Age must be greater than 18");
+    } else if (!RUTUtils.isValid(studentDTO.getRut())) {
+      throw new BodyNotValidException("RUT is not valid");
     }
     
-    //TODO: VALIDAR RUT
-    
     Student student = new Student(
-      studentDTO.getRut(),
+      RUTUtils.cleanRut(studentDTO.getRut()),
       studentDTO.getName(),
       studentDTO.getLastName(),
       studentDTO.getAge()

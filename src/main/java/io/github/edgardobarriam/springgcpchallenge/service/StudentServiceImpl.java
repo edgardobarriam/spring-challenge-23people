@@ -85,7 +85,7 @@ public class StudentServiceImpl implements StudentService {
   }
   
   private void validateStudent(StudentDTO studentDTO) throws BodyNotValidException {
-    if (studentDTO.getAge() < 18) {
+    if (studentDTO.getAge() <= 18) {
       throw new BodyNotValidException("Age must be greater than 18");
     } else if (!RUTUtils.isValid(studentDTO.getRut())) {
       throw new BodyNotValidException("RUT is not valid");

@@ -1,38 +1,19 @@
-package io.github.edgardobarriam.springgcpchallenge.model;
+package io.github.edgardobarriam.springgcpchallenge.dto;
 
-import javax.persistence.*;
-
-@Entity
-@Table(name = "students")
-public class Student {
+public class StudentDTO {
   
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column
   private int id;
-  @Column(name = "rut")
   private String rut;
-  @Column(name = "name")
   private String name;
-  @Column(name = "last_name")
   private String lastName;
-  @Column(name = "age")
   private int age;
-  @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-  @JoinColumn(name = "course_id")
-  private Course course;
+  private CourseDTO course;
   
-  public Student() {
+  public StudentDTO() {
   }
   
-  public Student(String rut, String name, String lastName, int age) {
-    this.rut = rut;
-    this.name = name;
-    this.lastName = lastName;
-    this.age = age;
-  }
-  
-  public Student(String rut, String name, String lastName, int age, Course course) {
+  public StudentDTO(int id, String rut, String name, String lastName, int age, CourseDTO course) {
+    this.id = id;
     this.rut = rut;
     this.name = name;
     this.lastName = lastName;
@@ -42,6 +23,10 @@ public class Student {
   
   public int getId() {
     return id;
+  }
+  
+  public void setId(int id) {
+    this.id = id;
   }
   
   public String getRut() {
@@ -76,17 +61,17 @@ public class Student {
     this.age = age;
   }
   
-  public Course getCourse() {
+  public CourseDTO getCourse() {
     return course;
   }
   
-  public void setCourse(Course course) {
+  public void setCourse(CourseDTO course) {
     this.course = course;
   }
   
   @Override
   public String toString() {
-    return "Student{" +
+    return "StudentDTO{" +
       "id=" + id +
       ", rut='" + rut + '\'' +
       ", name='" + name + '\'' +
